@@ -1,6 +1,5 @@
 package com.getordeusuarios.getorusuarios.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -8,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.getordeusuarios.getorusuarios.models.Usuario;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 @Transactional
@@ -26,5 +25,12 @@ public class DaoImplement implements UsuarioDao{
         return entityManager.createQuery(query).getResultList();
         
     }
+
+	@Override
+	public void eliminar(Long id) {
+		Usuario usuario = entityManager.find(Usuario.class, id);
+		entityManager.remove(usuario);
+		
+	}
 
 }

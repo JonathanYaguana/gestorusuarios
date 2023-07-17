@@ -1,6 +1,7 @@
 package com.getordeusuarios.getorusuarios.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
