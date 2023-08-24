@@ -3,7 +3,13 @@ package com.getordeusuarios.getorusuarios.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.getordeusuarios.getorusuarios.dao.UsuarioDao;
 import com.getordeusuarios.getorusuarios.models.Usuario;
@@ -14,7 +20,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioDao usuarioDao;
 
-	@RequestMapping(value = "api/usuarios/{Id}", method = RequestMethod.GET)
+	@GetMapping("api/usuarios/{Id}")
 	public Usuario getUsuarios(@PathVariable Long Id) {
 		Usuario usuario = new Usuario();
 		usuario.setId(1L);
@@ -26,14 +32,19 @@ public class UsuarioController {
 		return usuario;
 	}
 	
-	@RequestMapping(value = "api/usuarios")
+	@GetMapping("api/usuarios")
 	public List<Usuario> getUsuarios() {
 		return usuarioDao.getUsuarios();
 	}
 	
-	@RequestMapping(value = "api/usuarios/{Id}", method = RequestMethod.DELETE)
+	@DeleteMapping("api/usuarios/{Id}")
 	public void eliminarUsuario(@PathVariable Long Id) {
 		usuarioDao.eliminar(Id);		
+	}
+	
+	@PostMapping(value = "api/usuarios")
+	public void regitrarUsuario(@RequestBody Usuario usuario) {
+		usuarioDao.registrar(usuario);
 	}
 
 }

@@ -17,6 +17,7 @@ public class DaoImplement implements UsuarioDao{
 	@PersistenceContext
 	EntityManager entityManager;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Usuario> getUsuarios() {
@@ -30,6 +31,12 @@ public class DaoImplement implements UsuarioDao{
 	public void eliminar(Long id) {
 		Usuario usuario = entityManager.find(Usuario.class, id);
 		entityManager.remove(usuario);
+		
+	}
+
+	@Override
+	public void registrar(Usuario usuario) {
+		entityManager.merge(usuario);
 		
 	}
 
