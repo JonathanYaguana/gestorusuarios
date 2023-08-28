@@ -21,13 +21,13 @@ async function cargarUsuarios() {
 		for(let usuario of usuarios){
 
 			let botonHtml ='<a class="btn btn-outline-warning" onclick="eliminarUsuario(' + usuario.id + ')" href="#" role="button">Eliminar</a>';
-
+			let txtTelefono =  usuario.telefono == null ? '-': usuario.telefono;
 			let usuarioHtml = 
 			'<tr><td>' + usuario.id +
 			'</td><td>' + usuario.nombre +
 			'</td><td>' + usuario.apellido +
 			'</td><td>' + usuario.email +
-			'</td><td>' + usuario.telefono +
+			'</td><td>' + txtTelefono +
 			'</td><td>' + botonHtml + '</td></tr>';
 			
 			listadoHtml += usuarioHtml;	
