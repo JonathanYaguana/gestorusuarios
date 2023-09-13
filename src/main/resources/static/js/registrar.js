@@ -26,5 +26,4 @@ let datos = {};
 			},
 			body: JSON.stringify(datos)
 		});
-	location.reload()
 }
