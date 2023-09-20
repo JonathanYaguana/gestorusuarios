@@ -1,5 +1,6 @@
 package com.getordeusuarios.getorusuarios.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.getordeusuarios.getorusuarios.dao.UsuarioDao;
 import com.getordeusuarios.getorusuarios.models.Usuario;
+import com.getordeusuarios.getorusuarios.utils.JWTUtil;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
@@ -21,6 +24,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
+	
+	@Autowired
+	private JWTUtil jwtUtil;
 
 	@GetMapping("api/usuarios/{Id}")
 	public Usuario getUsuarios(@PathVariable Long Id) {
@@ -35,7 +41,13 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("api/usuarios")
-	public List<Usuario> getUsuarios() {
+	public List<Usuario> getUsuarios(@RequestHeader(value="Authorization") String token) {
+		
+		String usuarioId = jwtUtil.getKey(token);
+		if(usuarioId==null) {
+			return new ArrayList<>();
+		}
+		
 		return usuarioDao.getUsuarios();
 	}
 	

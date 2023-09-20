@@ -26,4 +26,7 @@ let datos = {};
 			},
 			body: JSON.stringify(datos)
 		});
+		
+		alert('La cuenta fue creada')
+		window.location.href = 'login.html'
 }
