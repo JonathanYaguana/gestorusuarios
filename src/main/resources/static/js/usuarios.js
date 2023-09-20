@@ -10,8 +10,9 @@ async function cargarUsuarios() {
 			headers: getHeaders()
 		});
 		const usuarios = await request.json();
-
+		
 		console.log(usuarios);
+		actualizarEmailUsuario();
 		
 		let listadoHtml = '';
 		
@@ -32,6 +33,10 @@ async function cargarUsuarios() {
 		
 		document.querySelector('#usuarios tbody').outerHTML = listadoHtml;
 
+}
+
+function actualizarEmailUsuario(){
+	document.getElementById('txt-email-usuario').outerHTML = localStorage.email;
 }
 
 function getHeaders(){

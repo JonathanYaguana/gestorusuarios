@@ -40,19 +40,27 @@ public class UsuarioController {
 		return usuario;
 	}
 	
+	private boolean validarToken(String token) {
+		String usuarioId = jwtUtil.getKey(token);
+		return usuarioId != null;
+	}
+	
 	@GetMapping("api/usuarios")
 	public List<Usuario> getUsuarios(@RequestHeader(value="Authorization") String token) {
 		
-		String usuarioId = jwtUtil.getKey(token);
-		if(usuarioId==null) {
-			return new ArrayList<>();
+		if(!validarToken(token)) {
+			return null;
 		}
 		
 		return usuarioDao.getUsuarios();
 	}
 	
 	@DeleteMapping("api/usuarios/{Id}")
-	public void eliminarUsuario(@PathVariable Long Id) {
+	public void eliminarUsuario(@RequestHeader(value="Authorization") String token,
+			@PathVariable Long Id) {
+		if (!validarToken(token)) {
+			return;
+		}
 		usuarioDao.eliminar(Id);		
 	}
 	
